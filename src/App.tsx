@@ -1,10 +1,16 @@
-import React from 'react';
-import './App.css';
+import { useAppContext } from './components/AppProvider';
+import AuthPage from './pages/AuthPage';
+import ChatPage from './pages/ChatPage';
+import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
+  const { user } = useAppContext();
+
   return (
-    <div className="App">
-      
+    <div>
+      <CssBaseline />
+
+      {user ? <ChatPage user={user} /> : <AuthPage />}
     </div>
   );
 }

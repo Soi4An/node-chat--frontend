@@ -1,6 +1,11 @@
 # Node Chat
 
-This project has implemented with TS, Linter, React, Rouder-Dom, Aaxios
+This is a simple chat, where the user authorizes with the help of only the name field. Chat works on WebSockets technology for supplying real-time connection. The user can create rooms and then edit these.
 
-## Available Scripts
-
+## Technologies
+- TS
+- React
+- Rouder-Dom
+- Axios
+- Linter
+- Material UI (framework)
