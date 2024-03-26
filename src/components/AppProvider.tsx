@@ -43,9 +43,10 @@ export const AppProvider = ({ children }: Props) => {
       if (foundUserName) {
         login(foundUserName)
           .then((res) => setUser(res.data))
-          .catch(() =>
+          .catch((err) =>
             console.error(
-              'Something went wrong for getting user in provaider component'
+              'Something went wrong for getting user in provaider component',
+              err,
             )
           );
       }
