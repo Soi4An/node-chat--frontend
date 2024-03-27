@@ -40,12 +40,12 @@ function ChatPage({ user }: Params) {
       );
     });
 
-    console.log('---socket=', socket.readyState);
+    console.log('--opened socket status =', socket.readyState);
 
     setSocket(socket);
 
     return () => {
-      console.log('---effect close', socket.readyState);
+      console.log('--before closing socket status =', socket.readyState);
 
       if (socket.readyState === WebSocket.OPEN) {
         socket.close();

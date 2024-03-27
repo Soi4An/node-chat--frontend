@@ -32,7 +32,8 @@ function SettingChat({
 
   const [chatName, setChatName] = useState<string>(initName);
   const [members, setMembers] = useState<string[]>(initWithoutUser);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadSubmit, setIsLoadSubmit] = useState<boolean>(false);
+  const [isLoadDelete, setIsLoadDelete] = useState<boolean>(false);
   const [errorValidate, setErrorValidate] = useState<string | null>(null);
   const { setGlobalError } = useAppContext();
   const buttonTitle = !exitingChat ? 'Create' : 'Update';
@@ -70,17 +71,17 @@ function SettingChat({
       ) {
         return true;
       } else {
-        return isLoading;
+        return isLoadSubmit;
       }
     } else {
-      return isLoading;
+      return isLoadSubmit;
     }
   };
 
   const handlerSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setIsLoading(true);
+    setIsLoadSubmit(true);
     setErrorValidate(null);
 
     const newChat = {
@@ -91,22 +92,22 @@ function SettingChat({
     if (!exitingChat) {
       createChat({ ...newChat, userName })
         .catch((err) => setErrorMessage(err.response?.status))
-        .finally(() => setIsLoading(false));
+        .finally(() => setIsLoadSubmit(false));
     } else {
       editChat(exitingChat.id, newChat)
         .then(toggleIsSetting)
         .catch((err) => setErrorMessage(err.response?.status))
-        .finally(() => setIsLoading(false));
+        .finally(() => setIsLoadSubmit(false));
     }
   };
 
   const handlerDeleteChat = () => {
     if (exitingChat) {
-      setIsLoading(true);
+      setIsLoadDelete(true);
 
       removeChat(exitingChat.id)
         .catch(() => setGlobalError('Could not delete chat'))
-        .finally(() => setIsLoading(false));
+        .finally(() => setIsLoadDelete(false));
     }
   };
 
@@ -166,14 +167,14 @@ function SettingChat({
         >
           {exitingChat && (
             <Button
-              sx={{ mr: { xs: 0, sm: 2 }}}
-              disabled={isLoading}
+              sx={{ mr: { xs: 0, sm: 2 }, width: '100px' }}
+              disabled={isLoadDelete}
               type="button"
               variant="contained"
               size="large"
               onClick={handlerDeleteChat}
             >
-              {isLoading ? (
+              {isLoadDelete ? (
                 <CircularProgress color="primary" size={26} />
               ) : (
                 'Delete'
@@ -182,12 +183,13 @@ function SettingChat({
           )}
 
           <Button
+            sx={{ mr: { xs: 0, sm: 2 }, width: '100px' }}
             disabled={setDisabledUpdate()}
             type="submit"
             variant="contained"
             size="large"
           >
-            {isLoading ? (
+            {isLoadSubmit ? (
               <CircularProgress color="primary" size={26} />
             ) : (
               buttonTitle

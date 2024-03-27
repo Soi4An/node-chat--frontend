@@ -28,7 +28,7 @@ function ListChats({
   const socketUpdateChat = (event: MessageEvent<string>) => {
     const data: SocketRespond = JSON.parse(event.data);
 
-    console.log('--socketUpdateChat--', data);
+    console.log('--socket-Chat--', data);
 
     if (user && data.type === TypeSocket.ChatCreate) {
       if (data.chat.creatorName === user.name) {
